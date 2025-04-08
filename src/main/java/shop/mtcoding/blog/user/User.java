@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 
+// Setter 금지
 @NoArgsConstructor
 @Getter
 @Table(name = "user_tb")

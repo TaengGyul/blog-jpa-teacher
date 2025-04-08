@@ -14,17 +14,21 @@ public class BoardResponse {
         private String content;
         private Boolean isPublic;
         private Boolean isOwner;
+        private Boolean isLove;
+        private Integer loveCount;
         private String username;
         private Timestamp createdAt;
 
-        public DetailDTO(Board board, Integer sessionUserId) {
+        public DetailDTO(Board board, Integer sessionUserId, Boolean isLove, Integer loveCount) {
             this.id = board.getId();
             this.title = board.getTitle();
             this.content = board.getContent();
             this.isPublic = board.getIsPublic();
             this.isOwner = sessionUserId == board.getUser().getId();
-            this.username = board.getUser().getUsername();
+            this.username = board.getUser().getUsername(); // 이 부분이 Select가 되는 부분
             this.createdAt = board.getCreatedAt();
+            this.isLove = isLove; // 얘네를 given 데이터라고 한다
+            this.loveCount = loveCount; // 얘네를 given 데이터라고 한다
         }
     }
 

@@ -43,11 +43,12 @@ public class UserService {
         return dto;
     }
 
+    // 1. 영속화 시키기 (Select 조회 - pc 들어옴)
     @Transactional
     public User 회원정보수정(UserRequest.UpdateDTO updateDTO, Integer userId) {
         User user = userRepository.findById(userId);
         if (user == null) throw new RuntimeException("회원을 찾을 수 없습니다");
         user.update(updateDTO.getPassword(), updateDTO.getEmail()); // 영속화된 객체의 상태변경
-        return user;
+        return user; // 리턴한 이유는 세션을 동기화해야해서!!
     } // 더티체킹 -> 상태가 변경되면 update을 날려요!!
 }
