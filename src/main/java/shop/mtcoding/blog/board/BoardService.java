@@ -3,7 +3,6 @@ package shop.mtcoding.blog.board;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import shop.mtcoding.blog.love.Love;
 import shop.mtcoding.blog.love.LoveRepository;
 import shop.mtcoding.blog.user.User;
 
@@ -30,14 +29,7 @@ public class BoardService {
     }
 
     public BoardResponse.DetailDTO 글상세보기(Integer id, Integer userId) {
-        Board board = boardRepository.findByIdJoinUser(id);
-
-        Love love = loveRepository.findByUserIdAndBoardId(userId, id);
-        Long loveCount = loveRepository.findByBoardId(id);
-
-        Boolean isLove = love == null ? false : true;
-
-        BoardResponse.DetailDTO detailDTO = new BoardResponse.DetailDTO(board, userId, isLove, loveCount.intValue());
+        BoardResponse.DetailDTO detailDTO = boardRepository.findDetail(id, userId);
         return detailDTO;
     }
 }

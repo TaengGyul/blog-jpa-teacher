@@ -6,6 +6,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import shop.mtcoding.blog.board.Board;
 import shop.mtcoding.blog.board.BoardRepository;
+import shop.mtcoding.blog.board.BoardResponse;
 
 import java.util.List;
 
@@ -15,6 +16,16 @@ public class BoardRepositoryTest {
 
     @Autowired // DI
     private BoardRepository boardRepository;
+
+    @Test
+    public void findDetail_test() {
+        // given
+        Integer userId = 1;
+        Integer boardId = 4;
+
+        BoardResponse.DetailDTO detailDTO = boardRepository.findDetail(boardId, userId);
+        System.out.println(detailDTO);
+    }
 
     @Test
     public void findByIdJoinUser() {
