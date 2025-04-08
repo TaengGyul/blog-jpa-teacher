@@ -36,7 +36,7 @@ public class BoardRepository {
         query.setParameter("userId", userId);
         query.setParameter("boardId", boardId);
 
-        return null;
+        return (BoardResponse.DetailDTO) query.getSingleResult();
     }
 
     public Board findByIdJoinUser(Integer id) {
