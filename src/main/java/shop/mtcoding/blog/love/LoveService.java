@@ -18,13 +18,16 @@ public class LoveService {
 
     @Transactional
     public LoveResponse.DeleteDTO 좋아요취소(Integer id) {
+
         Love lovePS = loveRepository.findById(id);
         if (lovePS == null) throw new RuntimeException("좋아요를 안했는데 왜 취소를 하려고 해!");
+
+        // 권한 체크 (lovePS.getUser().getId() 비교 sessionUserId)
 
         Integer boardId = lovePS.getBoard().getId();
 
         loveRepository.deleteById(id);
-        
+
         Long loveCount = loveRepository.findByBoardId(id);
         return new LoveResponse.DeleteDTO(loveCount.intValue());
     }
