@@ -29,15 +29,16 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    public BoardResponse.DetailDTO 글상세보기(Integer id, Integer userId) {
+    public BoardResponse.DetailDTO 글상세보기(Integer id, Integer sessionUserId) {
         Board board = boardRepository.findByIdJoinUser(id);
 
-        Love love = loveRepository.findByUserIdAndBoardId(userId, id);
+        Love love = loveRepository.findByUserIdAndBoardId(sessionUserId, id);
         Long loveCount = loveRepository.findByBoardId(id);
 
+        Integer loveId = love == null ? null : love.getId();
         Boolean isLove = love == null ? false : true;
 
-        BoardResponse.DetailDTO detailDTO = new BoardResponse.DetailDTO(board, userId, isLove, loveCount.intValue());
+        BoardResponse.DetailDTO detailDTO = new BoardResponse.DetailDTO(board, sessionUserId, isLove, loveCount.intValue(), loveId);
         return detailDTO;
     }
 }
