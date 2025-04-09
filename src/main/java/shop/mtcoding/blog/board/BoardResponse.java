@@ -24,7 +24,7 @@ public class BoardResponse {
 
         private List<Reply> replies;
 
-        public DetailDTO(Board board, Integer sessionUserId, Boolean isLove, Integer loveCount, Integer loveId, List<Reply> replies) {
+        public DetailDTO(Board board, Integer sessionUserId, Boolean isLove, Integer loveCount, Integer loveId) {
             this.id = board.getId();
             this.title = board.getTitle();
             this.content = board.getContent();
@@ -35,7 +35,7 @@ public class BoardResponse {
             this.isLove = isLove; // 얘네를 given 데이터라고 한다
             this.loveCount = loveCount; // 얘네를 given 데이터라고 한다
             this.loveId = loveId;
-            this.replies = replies;
+            this.replies = board.getReplies();
         }
     }
 

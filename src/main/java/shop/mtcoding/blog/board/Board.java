@@ -5,9 +5,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import shop.mtcoding.blog.reply.Reply;
 import shop.mtcoding.blog.user.User;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -23,6 +26,9 @@ public class Board {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user; // ORM
+
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    private List<Reply> replies = new ArrayList<>();
 
     @CreationTimestamp
     private Timestamp createdAt;
