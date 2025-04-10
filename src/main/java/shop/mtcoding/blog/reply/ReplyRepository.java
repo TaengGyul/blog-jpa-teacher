@@ -18,4 +18,10 @@ public class ReplyRepository {
         List<Reply> replies = query.getResultList();
         return replies;
     }
+
+    public Reply save(Reply reply) {
+        em.persist(reply);
+
+        return reply;
+    }
 }
