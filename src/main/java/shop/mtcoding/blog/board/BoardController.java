@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import shop.mtcoding.blog._core.error.ex.Exception401;
 import shop.mtcoding.blog.user.User;
 
 @RequiredArgsConstructor
@@ -15,6 +16,7 @@ import shop.mtcoding.blog.user.User;
 public class BoardController {
     private final BoardService boardService;
     private final HttpSession session;
+
 
     @GetMapping("/v2/board/{id}")
     public @ResponseBody BoardResponse.DetailDTO v2Detail(@PathVariable Integer id, HttpServletRequest request) {
@@ -58,7 +60,7 @@ public class BoardController {
     @PostMapping("/board/save")
     public String save(BoardRequest.SaveDTO saveDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        if (sessionUser == null) throw new RuntimeException("인증이 필요합니다");
+        if (sessionUser == null) throw new Exception401("인증이 필요합니다");
 
         boardService.글쓰기(saveDTO, sessionUser);
 
@@ -68,7 +70,7 @@ public class BoardController {
     @GetMapping("/board/save-form")
     public String saveForm() {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        if (sessionUser == null) throw new RuntimeException("인증이 필요합니다");
+        if (sessionUser == null) throw new Exception401("인증이 필요합니다");
         return "board/save-form";
     }
 }

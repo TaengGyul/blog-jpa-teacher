@@ -38,4 +38,5 @@ public class Reply {
         this.board = board;
         this.createdAt = createdAt;
     }
+
 }

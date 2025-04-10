@@ -17,6 +17,16 @@ public class BoardService {
     private final LoveRepository loveRepository;
     private final ReplyRepository replyRepository;
 
+    // TODO
+    public void 글수정하기() {
+
+    }
+
+    public void 글삭제하기() {
+
+    }
+
+
     public List<Board> 글목록보기(Integer userId) {
         if (userId == null) {
             return boardRepository.findAll();
@@ -44,4 +54,6 @@ public class BoardService {
         BoardResponse.DetailDTO detailDTO = new BoardResponse.DetailDTO(board, sessionUserId, isLove, loveCount.intValue(), loveId);
         return detailDTO;
     }
+
+
 }
