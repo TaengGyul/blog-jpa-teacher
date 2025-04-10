@@ -17,6 +17,9 @@ public class BoardService {
     private final LoveRepository loveRepository;
     private final ReplyRepository replyRepository;
 
+    public static void 댓글삭제(Integer userId) {
+    }
+
     public List<Board> 글목록보기(Integer userId) {
         if (userId == null) {
             return boardRepository.findAll();

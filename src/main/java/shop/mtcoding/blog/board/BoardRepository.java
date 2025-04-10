@@ -12,6 +12,12 @@ import java.util.List;
 public class BoardRepository {
     private final EntityManager em;
 
+    public void deleteByIdAndReplies(int id) {
+        Query query = em.createNativeQuery("delete from user_tb where id = ?");
+        query.setParameter(1, id);
+        query.executeUpdate();
+    }
+
     public Board findByIdJoinUserAndReplies(Integer id) {
         Query query = em.createQuery("select b from Board b join fetch b.user left join fetch b.replies r left join fetch r.user where b.id = :id order by r.id desc",
                 Board.class);

@@ -71,4 +71,13 @@ public class BoardController {
         if (sessionUser == null) throw new RuntimeException("인증이 필요합니다");
         return "board/save-form";
     }
+
+    @PostMapping("/reply/{id}/delete")
+    public String deleteReply(@PathVariable Integer id, HttpSession session) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        if (sessionUser == null) throw new RuntimeException("인증이 필요합니다");
+
+        BoardService.댓글삭제(id);
+        return null;
+    }
 }
