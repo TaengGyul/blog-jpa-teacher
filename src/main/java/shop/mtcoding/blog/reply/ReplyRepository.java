@@ -12,6 +12,10 @@ import java.util.List;
 public class ReplyRepository {
     private final EntityManager em;
 
+    public Reply findById(Integer id) {
+        return em.find(Reply.class, id);
+    }
+
     public List<Reply> findAllByBoardId(int boardId) {
         Query query = em.createQuery("select r from Reply r join fetch r.user where r.board.id = :boardId", Reply.class); // 맵핑 되면 Reply 객체로 맵핑 됨
         query.setParameter("boardId", boardId);
@@ -23,5 +27,11 @@ public class ReplyRepository {
         em.persist(reply);
 
         return reply;
+    }
+
+    public void deleteById(Integer id) {
+        em.createQuery("delete from Reply r where r.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
     }
 }
