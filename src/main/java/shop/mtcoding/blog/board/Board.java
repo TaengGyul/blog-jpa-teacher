@@ -27,7 +27,7 @@ public class Board {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user; // ORM
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Reply> replies = new ArrayList<>();
 
     @CreationTimestamp
