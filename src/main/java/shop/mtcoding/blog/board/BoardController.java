@@ -73,4 +73,14 @@ public class BoardController {
         if (sessionUser == null) throw new Exception401("인증이 필요합니다");
         return "board/save-form";
     }
+
+    @PostMapping("/board/{id}/delete")
+    public String delete(@PathVariable("id") Integer id) {
+        User sessionUser = (User) session.getAttribute("sessionUser");
+        if (sessionUser == null) throw new Exception401("인증이 필요합니다");
+
+        boardService.글삭제하기(id);
+
+        return "redirect:/";
+    }
 }

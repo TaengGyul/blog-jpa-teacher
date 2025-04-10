@@ -89,17 +89,17 @@ public class GlobalExceptionHandler {
 
     }
 
-    @ExceptionHandler(Exception.class)
-    public String exUnKnown(Exception e) { // 얜 무조건 하나 필요함
-        String html = """
-                <script>
-                alert('${msg}');
-                history.back();
-                </script>
-                """.replace("${msg}", "관리자에게 문의해주세요.");
-        System.out.println("관리자님 보세요 : " + e.getMessage()); // 로그를 파일에 기록해서 나중에 봐야함
-        return html;
-
-    }
+//    @ExceptionHandler(Exception.class)
+//    public String exUnKnown(Exception e) { // 얜 무조건 하나 필요함
+//        String html = """
+//                <script>
+//                alert('${msg}');
+//                history.back();
+//                </script>
+//                """.replace("${msg}", "관리자에게 문의해주세요.");
+//        System.out.println("관리자님 보세요 : " + e.getMessage()); // 로그를 파일에 기록해서 나중에 봐야함
+//        return html;
+//
+//    }
 
 }

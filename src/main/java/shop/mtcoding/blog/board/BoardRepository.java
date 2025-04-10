@@ -46,4 +46,7 @@ public class BoardRepository {
         em.persist(board);
     }
 
+    public void delete(Integer boardId) {
+        em.remove(em.find(Board.class, boardId));
+    }
 }

@@ -3,6 +3,7 @@ package shop.mtcoding.blog.board;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import shop.mtcoding.blog._core.error.ex.ExceptionApi403;
 import shop.mtcoding.blog.love.Love;
 import shop.mtcoding.blog.love.LoveRepository;
 import shop.mtcoding.blog.reply.ReplyRepository;
@@ -22,7 +23,17 @@ public class BoardService {
 
     }
 
-    public void 글삭제하기() {
+    @Transactional
+    public void 글삭제하기(Integer boardId) {
+        // 1. 게시글이 존재하는지 확인
+        Board board = boardRepository.findById(boardId);
+
+        if (!board.getUser().getId().equals()) {
+            throw new ExceptionApi403("해당 게시글을 삭제할 권한이 없습니다.");
+        }
+
+        // 2. 삭제
+        boardRepository.delete(boardId);
 
     }
 
