@@ -3,6 +3,8 @@ package shop.mtcoding.blog.board;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import shop.mtcoding.blog._core.error.ex.Exception403;
+import shop.mtcoding.blog._core.error.ex.Exception404;
 import shop.mtcoding.blog.love.Love;
 import shop.mtcoding.blog.love.LoveRepository;
 import shop.mtcoding.blog.reply.ReplyRepository;
@@ -18,9 +20,16 @@ public class BoardService {
     private final ReplyRepository replyRepository;
 
     // TODO
-    public void 글수정하기() {
+    @Transactional
+    public void 글수정하기(BoardRequest.UpdateDTO reqDTO, Integer boardId, Integer sessionUserId) {
+        Board boardPS = boardRepository.findById(boardId);
 
-    }
+        if (boardPS == null) throw new Exception404("자원을 찾을 수 없습니다.");
+
+        if (!boardPS.getUser().equals(sessionUserId)) throw new Exception403("권한이 없습니다.");
+
+        boardPS.update(reqDTO.getTitle(), reqDTO.getContent(), reqDTO.getIsPublic());
+    } // 더티 체킹 (상태변경해서 update)
 
     public void 글삭제하기() {
 
@@ -56,4 +65,13 @@ public class BoardService {
     }
 
 
+    public Board 업데이트글보기(int id, Integer sessionUserId) {
+        Board boardPS = boardRepository.findById(id);
+        if (boardPS == null) throw new Exception404("자원을 찾을 수 없습니다.");
+
+        if (!boardPS.getUser().getId().equals(sessionUserId)) {
+            throw new Exception403("권한이 없습니다.");
+        }
+        return boardPS;
+    }
 }
