@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import shop.mtcoding.blog._core.error.ex.Exception401;
 import shop.mtcoding.blog._core.util.Resp;
 
 import java.util.Map;
@@ -23,16 +22,12 @@ public class UserController {
     // ViewResolver -> prefix = /templates/ -> suffix = .mustache
     @GetMapping("/user/update-form")
     public String updateForm() {
-        User sessionUser = (User) session.getAttribute("sessionUser");
-        if (sessionUser == null) throw new Exception401("인증이 필요합니다");
-
         return "user/update-form";
     }
 
     @PostMapping("/user/update")
     public String update(UserRequest.UpdateDTO updateDTO) {
         User sessionUser = (User) session.getAttribute("sessionUser");
-        if (sessionUser == null) throw new Exception401("인증이 필요합니다");
 
         // update user_tb set password = ?, email = ? where id = ?
         User user = userService.회원정보수정(updateDTO, sessionUser.getId());
@@ -43,7 +38,7 @@ public class UserController {
         return "redirect:/";
     }
 
-    @GetMapping("/check-username-available/{username}")
+    @GetMapping("/api/check-username-available/{username}")
     public @ResponseBody Resp<?> checkUsernameAvailable(@PathVariable("username") String username) {
         Map<String, Object> dto = userService.유저네임중복체크(username);
         return Resp.ok(dto);
