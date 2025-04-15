@@ -1,11 +1,9 @@
-package shop.mtcoding.blog.board.board;
+package shop.mtcoding.blog.board;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import shop.mtcoding.blog.board.Board;
-import shop.mtcoding.blog.board.BoardRepository;
 import shop.mtcoding.blog.reply.Reply;
 
 import java.util.List;
