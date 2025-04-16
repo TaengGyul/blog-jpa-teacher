@@ -7,15 +7,12 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import shop.mtcoding.blog._core.error.ex.Exception400;
 import shop.mtcoding.blog._core.util.Resp;
 
-import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -31,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping("/user/update")
-    public String update(UserRequest.UpdateDTO updateDTO) {
+    public String update(@Valid UserRequest.UpdateDTO updateDTO, Errors errors) {
         User sessionUser = (User) session.getAttribute("sessionUser");
 
         // update user_tb set password = ?, email = ? where id = ?
@@ -57,13 +54,7 @@ public class UserController {
     @PostMapping("/join")
     // 리플렉션 사용한 거임 다만, 직접 만든게 아니라 만들어져있는 걸 사용한 것
     public String join(@Valid UserRequest.JoinDTO joinDTO, Errors errors) { // @Vaild를 붙이는 건 문법이다! 붙이지 않으면 리플렉션이 되지 않는다, 유효성 검사는 DTO 책임!, 유효성 검사는 PostMapping, PutMapping 일 때만 사용한다 -> 왜? body 데이터가 있으니까!
-        if (errors.hasErrors()) {
-            List<FieldError> fError = errors.getFieldErrors();
 
-            for (FieldError fieldError : fError) {
-                throw new Exception400(fieldError.getField() + ": " + fieldError.getDefaultMessage()); // getField() = 필드명
-            }
-        }
 
         // 유효성 검사
 //        Boolean r1 = Pattern.matches("^[a-zA-Z0-9]{2,20}$", joinDTO.getUsername());
@@ -85,13 +76,7 @@ public class UserController {
 
     @PostMapping("/login")
     public String login(@Valid UserRequest.LoginDTO loginDTO, Errors errors, HttpServletResponse response) { // Errors errors를 넣을 땐 무조건 DTO 옆에 둬야지 옮겨진다!!! **매우 중요**
-        if (errors.hasErrors()) {
-            List<FieldError> fError = errors.getFieldErrors();
 
-            for (FieldError fieldError : fError) {
-                throw new Exception400(fieldError.getField() + ": " + fieldError.getDefaultMessage()); // getField() = 필드명
-            }
-        }
 
         //System.out.println(loginDTO);
         User sessionUser = userService.로그인(loginDTO);
