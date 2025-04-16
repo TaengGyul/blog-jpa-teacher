@@ -28,12 +28,7 @@ public class BoardRepository {
     public Board findById(Integer id) {
         return em.find(Board.class, id);
     }
-
-    public List<Board> findAll() {
-        String sql = "select b from Board b where b.isPublic = true order by b.id desc";
-        Query query = em.createQuery(sql, Board.class);
-        return query.getResultList();
-    }
+    
 
     public List<Board> findAll(Integer userId) {
         String sql = "select b from Board b where b.isPublic = true or b.user.id = :userId order by b.id desc";
