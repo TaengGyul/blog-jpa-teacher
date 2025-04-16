@@ -45,7 +45,6 @@ public class UserRequest {
         @Size(min = 4, max = 20)
         private String password;
 
-        @Pattern(regexp = "^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\\.[a-zA-Z]{2,3}$", message = "이메일 형식으로 적어주세요")
         private String rememberMe; // check되면 on, 안되면 null
     }
 }

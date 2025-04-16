@@ -36,11 +36,13 @@ public class BoardService {
     }
 
 
-    public List<Board> 글목록보기(Integer userId) {
+    public BoardResponse.MainDTO 글목록보기(Integer userId, Integer page) {
         if (userId == null) {
-            return boardRepository.findAll();
+            List<Board> boards = boardRepository.findAll(page);
+            return new BoardResponse.MainDTO(boards, page - 1, page + 1);
         } else {
-            return boardRepository.findAll(userId);
+            List<Board> boards = boardRepository.findAll(userId, page);
+            return new BoardResponse.MainDTO(boards, page - 1, page + 1);
         }
     }
 
